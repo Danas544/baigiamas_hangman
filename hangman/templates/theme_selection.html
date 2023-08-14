@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <h1 class="text-center">Choose Theme</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form id="theme-form" method="post" class="theme-form">
+                <div class="form-group">
+                    <label for="theme">Select a Theme:</label>
+                    <select name="theme" id="theme" class="form-control">
+                        {% for theme in themes %}
+                        <option value="{{ theme.id }}">{{ theme.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <!-- Add a hidden input field to submit the selected theme -->
+                <input type="hidden" name="selected_theme" id="selected_theme" value="">
+                <!-- Add a submit button to trigger the form submission -->
+                <button type="submit" id="submit-btn" style="display: none;"></button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Add the following JavaScript code to update the selected_theme input and submit the form -->
+<script>
+    // Get the theme dropdown element
+    const themeDropdown = document.getElementById('theme');
+    const selectedThemeInput = document.getElementById('selected_theme');
+    const themeForm = document.getElementById('theme-form');
+    const submitButton = document.getElementById('submit-btn');
+
+    // Add an event listener to update the selected_theme input and submit the form when a theme is selected
+    themeDropdown.addEventListener('change', function() {
+        const selectedTheme = themeDropdown.value;
+        selectedThemeInput.value = selectedTheme;
+        themeForm.action = "{{ url_for('single_player_game', theme_id=selectedTheme) }}" + selectedTheme;
+        themeForm.submit();
+    });
+</script>
+
+{% endblock %}

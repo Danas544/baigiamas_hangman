@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="text-center">{{theme_name}} words</h1>
+  {% for word in all_words_by_theme %}
+    <div class="theme-container">
+      <p>Name: {{ word.name }}</p>
+      <p >Activated? {{ word.activate }}</p>
+      <div class="theme-links">
+        <a href="{{ url_for('delete_word', word_id=word.id,theme_name=theme_name, theme_id=theme_id) }}">Delete</a>
+        <a href="{{ url_for('update_word', word_id=word.id,theme_name=theme_name, theme_id=theme_id) }}">Update</a>
+      </div>
+    </div>
+  {% endfor %}
+
+  <hr>
+
+  <p><a href="{{ url_for('new_word', name=theme_name, theme_id=theme_id)}}">Add new word</a></p>
+{% endblock %}

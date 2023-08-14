@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <h1 class="text-center">Hangman Game</h1>
+    <p class="text-center">Theme: {{ hangman_game.theme_name }}</p>
+    <p class="text-center">Word: {{ " ".join(hangman_game.guess_word) }}</p>
+    <p class="text-center">Guessed Letters: {{ hangman_game.get_guessed_letters() }}</p>
+    <p class="text-center">Guesses Left: {{ hangman_game.get_guesses_left() }}</p>
+
+    <div class="text-center">
+        <form method="post" action="{{ url_for('single_player_game', theme_id=theme_id) }}">
+            <div class="form-group">
+                <input type="text" name="letter" maxlength="1" pattern="[a-zA-Z]"
+                    title="Please enter a single letter (a-z or A-Z)" required>
+            </div>
+            {% if end_game == False %}
+            <input type="submit" value="Guess" class="btn btn-primary">
+            {% else %}
+            <a href="{{ url_for('theme_selection') }}" class="btn btn-primary">Start Again?</a>
+            {% endif %}
+        </form>
+    </div>
+
+    <p class="text-center">{{ game_output }}</p>
+</div>
+
+{% endblock %}

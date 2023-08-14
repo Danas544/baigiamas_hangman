@@ -23,7 +23,7 @@ admin = Admin(app)
 bcrypt = Bcrypt(app)
 mail = Mail(app)
 login_manager = LoginManager(app)
-login_manager.login_view = "prisijungti"
+login_manager.login_view = "login"
 login_manager.login_message = "User needs to be logged in to view this page"
 login_manager.login_message_category = "info"
 
@@ -40,6 +40,14 @@ import hangman.routes.index_default
 import hangman.routes.register
 import hangman.routes.login
 import hangman.routes.signout
+import hangman.routes.user_profile
+import hangman.routes.game.game_mode
+import hangman.routes.game.theme_selection
+import hangman.routes.game.single_player_game
+import hangman.routes.game.two_player_game
+import hangman.routes.themes
+import hangman.routes.words
+
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8000, debug=True)
