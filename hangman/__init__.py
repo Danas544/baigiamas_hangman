@@ -1,6 +1,6 @@
 # pylint: disable-all
 import os
-from flask import Flask
+from flask import Flask, jsonify
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_admin import Admin
@@ -36,6 +36,7 @@ from hangman.hangman_db.models.user import User
 def load_user(user_id: str) -> User:
     return User.query.get(int(user_id))
 
+
 import hangman.routes.index_default 
 import hangman.routes.register
 import hangman.routes.login
@@ -47,6 +48,11 @@ import hangman.routes.game.single_player_game
 import hangman.routes.game.two_player_game
 import hangman.routes.themes
 import hangman.routes.words
+import hangman.routes.user_stats
+import hangman.routes.all_user_stats
+import hangman.routes.errors
+import hangman.routes.favicon
+
 
 
 if __name__ == "__main__":

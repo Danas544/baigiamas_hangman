@@ -4,14 +4,20 @@ from hangman.hangman_db.models.word import Word
 from hangman import db
 
 class HangmanGame:
-    # padaryta jau db reikia temas perkelti kad trauktu is db
-    # THEMES = {
-    #     "fruits": ["apple", "banana", "orange", "grape", "pear"],
-    #     "animals": ["cat", "dog", "elephant", "giraffe", "lion"],
-    #     "countries": ["usa", "uk", "canada", "japan", "germany"],
-    #     "colors": ["red", "blue", "green", "yellow", "orange"],
-    #     "professions": ["doctor", "teacher", "engineer", "artist", "chef"],
-    # }
+    HANGMAN_DRAWINGS = [
+        "0.png",
+        "1.png",
+        "2.png",
+        "3.png",
+        "4.png",
+        "5.png",
+        "6.png",
+        "7.png",
+        "8.png",
+        "9.png",
+        "10.png",
+    ]
+
     THEMES = None
     def __init__(self):
         self.theme_id = None
@@ -79,7 +85,7 @@ class HangmanGame:
         letter = letter.lower()
 
         if letter in self.guessed_letters:
-            return f"You already guessed the letter '{letter}'. Try another letter."
+            return f"You already guessed the letter '{letter}'. Try another letter.", 404
         else:
             self.guessed_letters.add(letter)
 
@@ -90,15 +96,15 @@ class HangmanGame:
 
             if "_" not in self.guess_word:
                 self.win = True
-                return "Congratulations! You guessed the word correctly."
+                return "Congratulations! You guessed the word correctly." , 200
 
-            return f"Good guess! The word: {' '.join(self.guess_word)}"
+            return f"Good guess!", 201
         else:
             self.guesses_left -= 1
             if self.guesses_left == 0:
                 self.win = False
-                return f"Game Over. The word was '{self.secret_word}'. Try again!"
-            return f"Wrong guess. {self.guesses_left} guesses left."
+                return f"Game Over. The word was '{self.secret_word}'. Try again!", 202
+            return f"Wrong guess. {self.guesses_left} guesses left.", 203
 
     def get_guesses_left(self):
         return self.guesses_left
@@ -108,3 +114,9 @@ class HangmanGame:
     
     def is_game_over(self):
         return self.get_guesses_left() == 0 or "_" not in self.guess_word
+    
+    def get_hangman_drawing(self):
+        if self.guesses_left == 0:
+            return self.HANGMAN_DRAWINGS[10]
+        stage = 10 - self.guesses_left
+        return self.HANGMAN_DRAWINGS[stage]

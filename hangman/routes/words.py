@@ -1,7 +1,7 @@
 # pylint: disable-all
 from flask import render_template, redirect, url_for, flash
 from flask_login import current_user, login_required
-from hangman import db, bcrypt, app
+from hangman import db, app
 from hangman.hangman_db.models.word import Word
 from hangman.forms.new_word_form import WordForm
 

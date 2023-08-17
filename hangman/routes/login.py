@@ -1,5 +1,5 @@
 # pylint: disable-all
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash
 from flask_login import current_user, login_user
 from hangman import bcrypt
 from hangman.forms.login_form import LoginForm

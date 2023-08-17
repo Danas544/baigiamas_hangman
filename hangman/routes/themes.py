@@ -1,7 +1,7 @@
 # pylint: disable-all
 from flask import render_template, redirect, url_for, flash
 from flask_login import current_user, login_required
-from hangman import db, bcrypt, app
+from hangman import db, app
 from hangman.forms.new_theme_form import ThemeForm
 from hangman.hangman_db.models.theme import Theme
 
@@ -9,7 +9,6 @@ from hangman.hangman_db.models.theme import Theme
 
 def get_available_themes(db_session):
     themes = db_session.query(Theme).filter_by(activate=1).all()
-    # themes = Theme.query.filter_by(activate=1).all()
     return themes
 
 
@@ -78,6 +77,7 @@ def update(id):
             db.session.commit()
             db.session.refresh(theme)
             return redirect(url_for("themes"))
+        print(theme.activate)
         return render_template(
             "update_theme.html",
             form=forma,

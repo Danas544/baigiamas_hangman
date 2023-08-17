@@ -1,12 +1,7 @@
 
-from flask import render_template, redirect, url_for, flash, request
-from flask_login import current_user, login_required, logout_user
-from hangman import bcrypt
-from hangman.forms.profile_form import ProfileForm
-from hangman.forms.change_password_form import ChangePasswordForm
-from hangman.photo.save_photo import save_photo
+from flask import render_template
+from flask_login import login_required, logout_user
 from hangman import db, app
-from hangman.hangman_db.models.user import User
 from hangman.game_logic.hangman_game import HangmanGame
 
 @app.route("/theme-selection", methods=["GET", "POST"])
