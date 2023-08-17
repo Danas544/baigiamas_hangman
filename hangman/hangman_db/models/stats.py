@@ -4,6 +4,7 @@ from flask_login import UserMixin
 from sqlalchemy import DateTime
 from datetime import datetime
 
+
 class Stats(db.Model, UserMixin):
     __tablename__ = "stats"
     id = db.Column(db.Integer, primary_key=True)
@@ -12,6 +13,3 @@ class Stats(db.Model, UserMixin):
     date = db.Column("date", DateTime, default=datetime.now())
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     user = db.relationship("User", lazy=True)
-
-
-

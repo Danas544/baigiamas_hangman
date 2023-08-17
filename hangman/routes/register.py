@@ -12,9 +12,9 @@ def register():
         return redirect(url_for("index"))
     form = RegisterForm()
     if form.validate_on_submit():
-        crypted_password = bcrypt.generate_password_hash(
-            form.password.data
-        ).decode("utf-8")
+        crypted_password = bcrypt.generate_password_hash(form.password.data).decode(
+            "utf-8"
+        )
         user = User(
             username=form.username.data,
             email=form.email.data,

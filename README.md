@@ -17,3 +17,8 @@ Requirements:
 ● After the game session, show a table with user information, games played , games
 won/lost, guesses made.
 ● Dockerize all parts of application as microservices.
+
+
+___
+
+loginimas , typing , two_players, dokerizuoti , perdaryti per normalia db (postgress sql)

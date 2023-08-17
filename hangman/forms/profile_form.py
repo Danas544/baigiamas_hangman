@@ -18,13 +18,10 @@ class ProfileForm(FlaskForm):
         super(ProfileForm, self).__init__(*args, **kwargs)
         self.current_user = current_user
 
-
     def validate_email(self, new_email):
         if new_email.data != self.current_user.email:
             user = User.query.filter_by(email=new_email.data).first()
             if user:
-                raise ValidationError(
-                "This email address is already registered"
-                )
+                raise ValidationError("This email address is already registered")
         else:
             return None

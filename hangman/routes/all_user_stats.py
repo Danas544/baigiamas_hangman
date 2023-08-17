@@ -41,8 +41,15 @@ def all_stats():
 
     sorted_users = [
         (rank + 1, user_id)
-        for rank, user_id in enumerate(sorted(user_total_scores.keys(), key=lambda x: user_total_scores[x], reverse=True))
+        for rank, user_id in enumerate(
+            sorted(
+                user_total_scores.keys(),
+                key=lambda x: user_total_scores[x],
+                reverse=True,
+            )
+        )
     ]
+    print(sorted_users)
     return render_template(
         "all_user_stats.html",
         title="User stats",

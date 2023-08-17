@@ -28,16 +28,19 @@ login_manager.login_message = "User needs to be logged in to view this page"
 login_manager.login_message_category = "info"
 
 from hangman.hangman_db.create_db import initialize_db
+
 db = initialize_db(app)
 
 
 from hangman.hangman_db.models.user import User
+
+
 @login_manager.user_loader
 def load_user(user_id: str) -> User:
     return User.query.get(int(user_id))
 
 
-import hangman.routes.index_default 
+import hangman.routes.index_default
 import hangman.routes.register
 import hangman.routes.login
 import hangman.routes.signout
@@ -52,7 +55,6 @@ import hangman.routes.user_stats
 import hangman.routes.all_user_stats
 import hangman.routes.errors
 import hangman.routes.favicon
-
 
 
 if __name__ == "__main__":

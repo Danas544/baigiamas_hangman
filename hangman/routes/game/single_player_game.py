@@ -43,12 +43,12 @@ def single_player_game(theme_id):
 
     if end_game is False:
         session[f"hangman_game_{current_user.id}"] = hangman_game.get_game_data()
-    
+
     return render_template(
         "single_player_game.html",
         hangman_game=hangman_game,
         game_output=game_output,
         theme_id=theme_id,
         end_game=end_game,
-        user_photo=current_user.photo
+        user_photo=current_user.photo,
     )

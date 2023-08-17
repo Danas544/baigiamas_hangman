@@ -8,8 +8,6 @@ from hangman import db, app
 from hangman.hangman_db.models.user import User
 
 
-
-
 @app.route("/two-player-game/<theme_id>", methods=["GET", "POST"])
 @login_required
 def two_player_game(theme_id):

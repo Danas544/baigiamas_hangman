@@ -3,6 +3,7 @@ from hangman.hangman_db.models.theme import Theme
 from hangman.hangman_db.models.word import Word
 from hangman import db
 
+
 class HangmanGame:
     HANGMAN_DRAWINGS = [
         "0.png",
@@ -19,13 +20,14 @@ class HangmanGame:
     ]
 
     THEMES = None
+
     def __init__(self):
         self.theme_id = None
         self.theme_name = None
         self.secret_word = ""
         self.guess_word = []
         self.guessed_letters = set()
-        self.guesses_left = 10  
+        self.guesses_left = 10
         self.win = None
 
     def get_game_data(self):
@@ -36,13 +38,14 @@ class HangmanGame:
             "guess_word": self.guess_word,
             "guessed_letters": list(self.guessed_letters),
             "guesses_left": self.guesses_left,
-            "win": self.win
+            "win": self.win,
         }
+
     @classmethod
     def from_dict(cls, data):
         game = cls()
         game.theme_id = data["theme_id"]
-        game.theme_name = data['theme_name']
+        game.theme_name = data["theme_name"]
         game.secret_word = data["secret_word"]
         game.guess_word = data["guess_word"]
         game.guessed_letters = set(data["guessed_letters"])
@@ -55,22 +58,20 @@ class HangmanGame:
         themes = db_session.query(Theme).filter_by(activate=1).all()
         cls.THEMES = themes
         return themes
-    
+
     def get_theme_words(self):
         words = db.session.query(Word).filter_by(theme_id=self.theme_id).all()
         return words
 
     def select_theme(self, theme_id):
-        selected_theme = next((theme for theme in self.THEMES if theme.id == theme_id), None)
+        selected_theme = next(
+            (theme for theme in self.THEMES if theme.id == theme_id), None
+        )
         if selected_theme:
             self.theme_id = theme_id
             self.theme_name = selected_theme.name
         else:
             raise ValueError("Invalid theme selected.")
-
-        
-        
-
 
     def start_single_player_game(self):
         if self.theme_id is None:
@@ -79,13 +80,16 @@ class HangmanGame:
         self.secret_word = random.choice([word.name for word in words]).lower()
         self.guess_word = ["_" if c.isalpha() else c for c in self.secret_word]
         self.guessed_letters = set()
-        self.guesses_left = 10 
+        self.guesses_left = 10
 
     def guess_letter(self, letter):
         letter = letter.lower()
 
         if letter in self.guessed_letters:
-            return f"You already guessed the letter '{letter}'. Try another letter.", 404
+            return (
+                f"You already guessed the letter '{letter}'. Try another letter.",
+                404,
+            )
         else:
             self.guessed_letters.add(letter)
 
@@ -96,7 +100,7 @@ class HangmanGame:
 
             if "_" not in self.guess_word:
                 self.win = True
-                return "Congratulations! You guessed the word correctly." , 200
+                return "Congratulations! You guessed the word correctly.", 200
 
             return f"Good guess!", 201
         else:
@@ -111,10 +115,10 @@ class HangmanGame:
 
     def get_guessed_letters(self):
         return ", ".join(self.guessed_letters)
-    
+
     def is_game_over(self):
         return self.get_guesses_left() == 0 or "_" not in self.guess_word
-    
+
     def get_hangman_drawing(self):
         if self.guesses_left == 0:
             return self.HANGMAN_DRAWINGS[10]

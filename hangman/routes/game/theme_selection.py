@@ -1,8 +1,8 @@
-
 from flask import render_template
 from flask_login import login_required, logout_user
 from hangman import db, app
 from hangman.game_logic.hangman_game import HangmanGame
+
 
 @app.route("/theme-selection", methods=["GET", "POST"])
 @login_required

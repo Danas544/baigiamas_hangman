@@ -6,7 +6,6 @@ from hangman.forms.new_theme_form import ThemeForm
 from hangman.hangman_db.models.theme import Theme
 
 
-
 def get_available_themes(db_session):
     themes = db_session.query(Theme).filter_by(activate=1).all()
     return themes
@@ -25,7 +24,6 @@ def themes():
         )
     else:
         return redirect(url_for("index"))
-
 
 
 @app.route("/new_theme", methods=["GET", "POST"])
@@ -51,7 +49,6 @@ def new_theme():
         return redirect(url_for("index"))
 
 
-
 @app.route("/theme/delete/<int:id>")
 @login_required
 def delete(id):
@@ -62,7 +59,6 @@ def delete(id):
         return redirect(url_for("themes"))
     else:
         return redirect(url_for("index"))
-
 
 
 @app.route("/theme/update/<int:id>", methods=["GET", "POST"])
@@ -86,4 +82,3 @@ def update(id):
         )
     else:
         return redirect(url_for("index"))
-

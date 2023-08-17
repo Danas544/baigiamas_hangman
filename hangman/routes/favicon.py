@@ -5,8 +5,8 @@ import os
 from hangman import app
 
 
-
-@app.route('/favicon.ico')
+@app.route("/favicon.ico")
 def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'),
-                          'favicon/favicon.ico')
+    return send_from_directory(
+        os.path.join(app.root_path, "static"), "favicon/favicon.ico"
+    )
