@@ -6,7 +6,5 @@ from hangman.admin_model.admino import ManoModelView
 
 
 @app.route("/")
-def index():
-    adminas = ManoModelView(User, db.session)
-    adminas = adminas.is_accessible()
-    return render_template("index.html", adminas=adminas)
+def index() -> str:
+    return render_template("index.html")

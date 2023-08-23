@@ -6,7 +6,17 @@
     {{ form.hidden_tag() }}
     <div class="form-group">
         {{ form.name.label(class="form-control-label") }}
+        {% if form.name.errors %}
+        {{ form.name(class="form-control form-control-lg is-invalid") }}
+        <div class="invalid-feedback">
+            {% for error in form.name.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}
+           
+        </div>
+        {% else %}
         {{ form.name(class="form-control", value=word.name) }}
+        {% endif %}
     </div>
     <div class="form-check">
         {{ form.activate.label(class="form-check-input") }}

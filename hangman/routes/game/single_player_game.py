@@ -3,18 +3,19 @@ from flask_login import current_user, login_required
 from hangman import app
 from hangman.game_logic.hangman_game import HangmanGame
 from hangman.hangman_db.crud import insert_stats
+from hangman import logger
+from typing import Union
 
-
-@app.route("/single-player-game/<theme_id>", methods=["GET", "POST"])
+@app.route("/single-player-game/<int:theme_id>", methods=["GET", "POST"])
 @login_required
-def single_player_game(theme_id):
+def single_player_game(theme_id: int) -> Union[str, redirect]:
     end_game = False
     if f"hangman_game_{current_user.id}" not in session or session[
         f"hangman_game_{current_user.id}"
-    ]["theme_id"] != int(theme_id):
+    ]["theme_id"] != theme_id:
         hangman_game = HangmanGame()
         try:
-            hangman_game.select_theme(int(theme_id))
+            hangman_game.select_theme(theme_id)
         except ValueError as e:
             flash(str(e), "danger")
             return redirect(url_for("theme_selection"))
@@ -31,6 +32,7 @@ def single_player_game(theme_id):
         letter = request.form["letter"]
         game_output = hangman_game.guess_letter(letter)
         if hangman_game.is_game_over():
+            logger.info(f"{current_user.username} {'win' if hangman_game.win is True else 'lose'}")
             insert_stats(
                 current_user=current_user,
                 type="win" if hangman_game.win is True else "lose",

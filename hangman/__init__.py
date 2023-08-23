@@ -5,6 +5,11 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_admin import Admin
 from flask_mail import Mail
+import logging
+import logging.config
+
+
+logging.config.fileConfig("logging_config.ini", disable_existing_loggers=False)
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
@@ -26,6 +31,7 @@ login_manager = LoginManager(app)
 login_manager.login_view = "login"
 login_manager.login_message = "User needs to be logged in to view this page"
 login_manager.login_message_category = "info"
+logger = logging.getLogger(__name__)
 
 from hangman.hangman_db.create_db import initialize_db
 

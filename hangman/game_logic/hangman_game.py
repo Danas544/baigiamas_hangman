@@ -1,11 +1,12 @@
 import random
+from typing import Dict, Any, List, Set, Union, Tuple
 from hangman.hangman_db.models.theme import Theme
 from hangman.hangman_db.models.word import Word
 from hangman import db
-
+from hangman import logger
 
 class HangmanGame:
-    HANGMAN_DRAWINGS = [
+    HANGMAN_DRAWINGS: List[str] = [
         "0.png",
         "1.png",
         "2.png",
@@ -19,18 +20,18 @@ class HangmanGame:
         "10.png",
     ]
 
-    THEMES = None
+    THEMES: List[Theme] = []
 
-    def __init__(self):
-        self.theme_id = None
-        self.theme_name = None
-        self.secret_word = ""
-        self.guess_word = []
-        self.guessed_letters = set()
-        self.guesses_left = 10
-        self.win = None
+    def __init__(self) -> None:
+        self.theme_id: Union[int, None] = None
+        self.theme_name: Union[str, None] = None
+        self.secret_word: str = ""
+        self.guess_word: List[str] = []
+        self.guessed_letters: Set[str] = set()
+        self.guesses_left: int = 10
+        self.win: Union[bool, None] = None
 
-    def get_game_data(self):
+    def get_game_data(self) -> Dict[str, Any]:
         return {
             "theme_id": self.theme_id,
             "theme_name": self.theme_name,
@@ -42,7 +43,7 @@ class HangmanGame:
         }
 
     @classmethod
-    def from_dict(cls, data):
+    def from_dict(cls, data: Dict[str, Any]) -> 'HangmanGame':
         game = cls()
         game.theme_id = data["theme_id"]
         game.theme_name = data["theme_name"]
@@ -54,16 +55,16 @@ class HangmanGame:
         return game
 
     @classmethod
-    def get_available_themes(cls, db_session):
+    def get_available_themes(cls, db_session: Any) -> List[Theme]:
         themes = db_session.query(Theme).filter_by(activate=1).all()
         cls.THEMES = themes
         return themes
 
-    def get_theme_words(self):
+    def get_theme_words(self) -> List[Word]:
         words = db.session.query(Word).filter_by(theme_id=self.theme_id).all()
         return words
 
-    def select_theme(self, theme_id):
+    def select_theme(self, theme_id: int) -> None:
         selected_theme = next(
             (theme for theme in self.THEMES if theme.id == theme_id), None
         )
@@ -71,10 +72,12 @@ class HangmanGame:
             self.theme_id = theme_id
             self.theme_name = selected_theme.name
         else:
+            logger.warning("Invalid theme selected.")
             raise ValueError("Invalid theme selected.")
 
-    def start_single_player_game(self):
+    def start_single_player_game(self) -> None:
         if self.theme_id is None:
+            logger.warning("Theme not selected.")
             raise ValueError("Theme not selected.")
         words = self.get_theme_words()
         self.secret_word = random.choice([word.name for word in words]).lower()
@@ -82,7 +85,7 @@ class HangmanGame:
         self.guessed_letters = set()
         self.guesses_left = 10
 
-    def guess_letter(self, letter):
+    def guess_letter(self, letter: str) -> Tuple[str, int]:
         letter = letter.lower()
 
         if letter in self.guessed_letters:
@@ -110,16 +113,16 @@ class HangmanGame:
                 return f"Game Over. The word was '{self.secret_word}'. Try again!", 202
             return f"Wrong guess. {self.guesses_left} guesses left.", 203
 
-    def get_guesses_left(self):
+    def get_guesses_left(self) -> int:
         return self.guesses_left
 
-    def get_guessed_letters(self):
+    def get_guessed_letters(self) -> str:
         return ", ".join(self.guessed_letters)
 
-    def is_game_over(self):
+    def is_game_over(self) -> bool:
         return self.get_guesses_left() == 0 or "_" not in self.guess_word
 
-    def get_hangman_drawing(self):
+    def get_hangman_drawing(self) -> str:
         if self.guesses_left == 0:
             return self.HANGMAN_DRAWINGS[10]
         stage = 10 - self.guesses_left

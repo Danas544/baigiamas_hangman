@@ -41,6 +41,10 @@
         </div>
         
     </div>
+    <div class="text-center mt-4">
+        <button id="muteButton" class="btn btn-secondary">Mute Sound</button>
+        <input id="volumeSlider" type="range" min="0" max="1" step="0.1" value="0.1" class="form-range">
+    </div>
 </div>
 
 <audio id="successSound" preload="auto">
@@ -67,6 +71,43 @@
         const winnerSound = document.getElementById("winnerSound");
         const gameOutput = "{{ game_output }}";
         const guessesLeft = {{ hangman_game.get_guesses_left() }};
+
+        const muteButton = document.getElementById("muteButton");
+        const volumeSlider = document.getElementById("volumeSlider");
+
+        const isMuted = localStorage.getItem("isMuted") === "true";
+        const savedVolume = parseFloat(localStorage.getItem("volume"));
+        
+        successSound.muted = isMuted;
+        drawingSound.muted = isMuted;
+        horrorSound.muted = isMuted;
+        winnerSound.muted = isMuted;
+        successSound.volume = savedVolume;
+        drawingSound.volume = savedVolume;
+        horrorSound.volume = savedVolume;
+        winnerSound.volume = savedVolume;
+        
+        volumeSlider.value = isNaN(savedVolume) ? 0.1 : savedVolume;
+        
+        muteButton.addEventListener("click", function() {
+            successSound.muted = !successSound.muted;
+            drawingSound.muted = !drawingSound.muted;
+            horrorSound.muted = !horrorSound.muted;
+            winnerSound.muted = !winnerSound.muted;
+            
+
+            localStorage.setItem("isMuted", successSound.muted);
+        });
+        
+        volumeSlider.addEventListener("input", function() {
+            successSound.volume = volumeSlider.value;
+            drawingSound.volume = volumeSlider.value;
+            horrorSound.volume = volumeSlider.value;
+            winnerSound.volume = volumeSlider.value;
+            
+
+            localStorage.setItem("volume", volumeSlider.value);
+        });
         
         if (gameOutput.includes("201")) {
             successSound.play();

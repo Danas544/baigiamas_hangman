@@ -33,7 +33,7 @@
     themeDropdown.addEventListener('change', function() {
         const selectedTheme = themeDropdown.value;
         selectedThemeInput.value = selectedTheme;
-        themeForm.action = "{{ url_for('game_mode_selection', theme_id=selectedTheme) }}" + selectedTheme;
+        themeForm.action = "/game-mode-selection/" + selectedTheme;
         themeForm.submit();
     });
 </script>

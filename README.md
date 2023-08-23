@@ -21,4 +21,4 @@ won/lost, guesses made.
 
 ___
 
-loginimas , typing , two_players, dokerizuoti , perdaryti per normalia db (postgress sql)
+loginimas +- , typing , two_players, dokerizuoti , perdaryti per normalia db (postgress sql), del muzikos reikia patylinti ir migtuka , kad isjungti vapse muzika? gal (+)

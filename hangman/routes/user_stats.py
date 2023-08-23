@@ -7,7 +7,7 @@ from hangman.hangman_db.crud import get_user_stats
 
 @app.route("/user_stats", methods=["GET"])
 @login_required
-def user_stats():
+def user_stats() -> str:
     stats = get_user_stats(current_user)
     total_score = sum(stats.score for stats in stats)
     total_win = sum(1 for stats in stats if stats.type == "win")

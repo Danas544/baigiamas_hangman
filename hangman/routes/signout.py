@@ -5,6 +5,6 @@ from hangman import app
 
 
 @app.route("/signout")
-def signout():
+def signout() -> redirect:
     logout_user()
     return redirect(url_for("index"))

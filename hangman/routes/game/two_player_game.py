@@ -12,7 +12,6 @@ from hangman.hangman_db.models.user import User
 @login_required
 def two_player_game(theme_id):
     if request.method == "POST":
-        # Handle two-player game logic
-        # ...
+
         pass
     return render_template("two_player_game.html")

@@ -4,7 +4,7 @@ from wtforms import SubmitField, StringField
 from wtforms.validators import DataRequired, ValidationError
 from flask_wtf.file import FileField, FileAllowed
 from hangman.hangman_db.models.user import User
-
+from hangman import logger
 
 class ProfileForm(FlaskForm):
     username = StringField("Username", [DataRequired()])
@@ -18,10 +18,11 @@ class ProfileForm(FlaskForm):
         super(ProfileForm, self).__init__(*args, **kwargs)
         self.current_user = current_user
 
-    def validate_email(self, new_email):
+    def validate_email(self, new_email)-> None:
         if new_email.data != self.current_user.email:
             user = User.query.filter_by(email=new_email.data).first()
             if user:
+                logger.info("This email address is already registered: %s", user.email)
                 raise ValidationError("This email address is already registered")
         else:
-            return None
+            return 

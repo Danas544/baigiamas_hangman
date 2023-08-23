@@ -1,25 +1,20 @@
 # pylint: disable-all
-from flask import render_template, redirect, url_for, flash
-from flask_login import current_user, login_required, logout_user
-from hangman import bcrypt
-from hangman.forms.profile_form import ProfileForm
-from hangman.forms.change_password_form import ChangePasswordForm
-from hangman.photo.save_photo import save_photo
-from hangman import db, app
-from hangman.hangman_db.models.user import User
+from flask import render_template, url_for
+from flask_login import current_user, login_required
+from hangman import app
 from hangman.hangman_db.crud import get_all_stats
-
+from typing import Dict, List, Tuple, Union
 
 @app.route("/all_stats", methods=["GET"])
 @login_required
-def all_stats():
+def all_stats() -> str:
     all_stats = get_all_stats()
 
-    user_total_scores = {}
-    user_total_wins = {}
-    user_total_losses = {}
-    user_names = {}
-    user_photos = {}
+    user_total_scores: Dict[int, int] = {}
+    user_total_wins: Dict[int, int] = {}
+    user_total_losses: Dict[int, int] = {}
+    user_names: Dict[int, str] = {}
+    user_photos: Dict[int, str] = {}
 
     for stats in all_stats:
         user_id = stats.user_id
@@ -49,7 +44,6 @@ def all_stats():
             )
         )
     ]
-    print(sorted_users)
     return render_template(
         "all_user_stats.html",
         title="User stats",
@@ -59,6 +53,5 @@ def all_stats():
         user_total_losses=user_total_losses,
         user_names=user_names,
         user_photos=user_photos,
-        sorted_users=sorted_users,
-        adminas=current_user.admin if current_user.admin else False,
+        sorted_users=sorted_users
     )

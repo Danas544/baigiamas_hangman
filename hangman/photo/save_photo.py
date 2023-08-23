@@ -3,9 +3,9 @@ from PIL import Image
 import os
 import secrets
 from hangman import app
+from werkzeug.datastructures import FileStorage
 
-
-def save_photo(form_picture):
+def save_photo(form_picture: FileStorage) -> str:
     random_hex = secrets.token_hex(8)
     _, jpg_or_png = os.path.splitext(form_picture.filename)
     picture_fn = random_hex + jpg_or_png
