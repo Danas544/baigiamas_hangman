@@ -5,7 +5,7 @@
   {% for word in all_words_by_theme %}
     <div class="theme-container">
       <p>Name: {{ word.name }}</p>
-      <p >Activated? {{ word.activate }}</p>
+      <p>Active? <input type="checkbox" disabled {% if word.activate %}checked{% endif %}></p>
       <div class="theme-links">
         <a href="{{ url_for('delete_word', word_id=word.id,theme_name=theme_name, theme_id=theme_id) }}">Delete</a>
         <a href="{{ url_for('update_word', word_id=word.id,theme_name=theme_name, theme_id=theme_id) }}">Update</a>

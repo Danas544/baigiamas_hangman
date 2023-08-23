@@ -21,4 +21,9 @@ won/lost, guesses made.
 
 ___
 
-loginimas +- , typing , two_players, dokerizuoti , perdaryti per normalia db (postgress sql), del muzikos reikia patylinti ir migtuka , kad isjungti vapse muzika? gal (+)
+readmy reikia dar sutvarkyti ir testu
+ 
+docker-compose build
+docker-compose up
+
+jeigu nespesiu email tai reikia pratrinti ka pradejau tai init file ir modules user

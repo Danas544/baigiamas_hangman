@@ -4,7 +4,7 @@ from hangman import db, app
 from hangman.game_logic.hangman_game import HangmanGame
 
 
-@app.route("/theme-selection", methods=["GET"])
+@app.route("/theme-selection", methods=["GET", "POST"])
 @login_required
 def theme_selection() -> str:
     available_themes = HangmanGame.get_available_themes(db.session)

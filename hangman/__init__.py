@@ -1,22 +1,20 @@
 # pylint: disable-all
 import os
-from flask import Flask, jsonify
+from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_admin import Admin
 from flask_mail import Mail
 import logging
 import logging.config
-
+from hangman.hangman_db.create_db import get_db_uri
 
 logging.config.fileConfig("logging_config.ini", disable_existing_loggers=False)
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "4654f5dfadsrfasdr54e6rae"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(
-    basedir, "hangman.db"
-)
+app.config["SQLALCHEMY_DATABASE_URI"] = get_db_uri()
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 # app.config["MAIL_SERVER"] = "smtp.gmail.com"
 # app.config["MAIL_PORT"] = 587

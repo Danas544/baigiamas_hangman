@@ -5,7 +5,7 @@
   {% for theme in all_themes %}
     <div class="theme-container">
       <p>Name: {{ theme.name }}</p>
-      <p>Activated? {{ theme.activate }}</p>
+      <p>Active? <input type="checkbox" disabled {% if theme.activate %}checked{% endif %}></p>
       <div class="theme-links">
         <a href="{{ url_for('delete', id=theme.id) }}">Delete</a>
         <a href="{{ url_for('update', id=theme.id) }}">Update</a>

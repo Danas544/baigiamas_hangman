@@ -56,7 +56,7 @@ class HangmanGame:
 
     @classmethod
     def get_available_themes(cls, db_session: Any) -> List[Theme]:
-        themes = db_session.query(Theme).filter_by(activate=1).all()
+        themes = db_session.query(Theme).filter_by(activate=True).all()
         cls.THEMES = themes
         return themes
 

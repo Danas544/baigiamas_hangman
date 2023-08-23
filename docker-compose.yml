@@ -1,0 +1,37 @@
+version: "3.10"
+services:
+  hangman-app:
+    container_name: hangman-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - database
+    environment:
+      - SERVER_HOST=https://localhost
+      - PROJECT_NAME=hangman_app
+      - SQLALCHEMY_MAX_POOL_OVERFLOW=20
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./hangman:/hangman
+    networks:
+      - development
+
+  database:
+    container_name: postgresql_db_hangman
+    image: postgres:15
+    env_file:
+      - db.env
+    volumes:
+      - postgre:/var/lib/postgresql/data
+    networks:
+      - development
+    ports:
+      - "5432:5432"
+
+networks:
+  development:
+
+volumes:
+  postgre:
