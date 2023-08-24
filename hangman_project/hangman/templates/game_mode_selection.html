@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Choose Game Mode</h1>
+
+<div class="text-center">
+    <a href="{{ url_for('single_player_game', theme_id=theme_id) }}" class="btn btn-lg btn-primary">Single Player</a>
+    <a href="{{ url_for('two_player_game', theme_id=theme_id) }}" class="btn btn-lg btn-primary disabled">Two Players (Coming Soon)</a>
+</div>
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>All User Statistics</h2>
+    
+    <table class="table table-bordered table-striped table-condensed">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Photo</th>
+                <th>User</th>
+                <th>Total Score</th>
+                <th>Total Wins</th>
+                <th>Total Losses</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rank, user_id in sorted_users %}
+            <tr>
+                <td>{{ rank }}</td>
+                <td>
+                    <img class="rounded-circle account-img" src="{{ user_photos.get(user_id, None) }}" width="40" height="60">
+                    {% if rank == 1 %}
+                        <img src="{{ url_for('static', filename='crown.png') }}" class="crown-icon">
+                    {% endif %}
+                </td>
+                <td>{{ user_names.get(user_id, None) }}</td>
+                <td>{{ user_total_scores.get(user_id, 0) }}</td>
+                <td>{{ user_total_wins.get(user_id, 0) }}</td>
+                <td>{{ user_total_losses.get(user_id, 0) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
