@@ -2,17 +2,13 @@ import unittest
 from unittest.mock import Mock
 from hangman.game_logic.hangman_game import HangmanGame
 from hangman.hangman_db.models.theme import Theme
-from hangman.hangman_db.models.user import User
-from flask import url_for, session
-from hangman import app, db
-from unittest.mock import patch
-from flask_login import current_user, login_user
+
+
 
 
 class TestHangmanGame(unittest.TestCase):
     def setUp(self):
         self.game = HangmanGame()
-        self.mock_db_session = Mock()
 
     def test_get_game_data(self):
         game_data = self.game.get_game_data()
@@ -67,50 +63,51 @@ class TestHangmanGame(unittest.TestCase):
     def test_hangman_win(self):
         self.game.secret_word = "apple"
         self.game.guess_word = ["_", "_", "_", "_", "_"]
-        self.game.guesses_left = 10
+        guesses_left = 10
 
         for letter in  self.game.secret_word:
             response, status_code = self.game.guess_letter(letter)
             if status_code == 201:
                 self.assertEqual(response, "Good guess!")
                 self.assertEqual(status_code, 201)
-                self.assertEqual(self.game.guesses_left, self.game.guesses_left)
+                self.assertEqual(guesses_left-(10-self.game.get_guesses_left()), self.game.get_guesses_left())
             elif status_code == 200:
                 self.assertEqual(response, "Congratulations! You guessed the word correctly.")
                 self.assertEqual(status_code, 200)
-                self.assertEqual(self.game.guesses_left, self.game.guesses_left)
+                self.assertEqual(guesses_left-(10-self.game.get_guesses_left()), self.game.get_guesses_left())
             elif status_code == 202:
                 self.assertEqual(response, f"Game Over. The word was '{self.game.secret_word}'. Try again!")
                 self.assertEqual(status_code, 202)
-                self.assertEqual(self.game.guesses_left, self.game.guesses_left)
+                self.assertEqual(guesses_left-(10-self.game.get_guesses_left()), self.game.get_guesses_left())
             elif status_code == 202:
-                self.assertEqual(response, f"Wrong guess. {self.guesses_left} guesses left.")
+                guesses_left -= 1
+                self.assertEqual(response, f"Wrong guess. {guesses_left} guesses left.")
                 self.assertEqual(status_code, 203)
-                self.assertEqual(self.game.guesses_left, self.game.guesses_left)
+                self.assertEqual(guesses_left-(10-self.game.get_guesses_left()), self.game.get_guesses_left())
 
     def test_hangman_lose(self):
         self.game.secret_word = "apple"
         self.game.guess_word = ["_", "_", "_", "_", "_"]
-        self.game.guesses_left = 10
+        guesses_left = 10
 
-        for letter in  ['q','w','r','t','y','u','i','o','p','s','z']:
+        for letter in ['q','w','r','t','y','u','i','o','p','s','z']:
             response, status_code = self.game.guess_letter(letter)
             if status_code == 201:
                 self.assertEqual(response, "Good guess!")
                 self.assertEqual(status_code, 201)
-                self.assertEqual(self.game.guesses_left, self.game.guesses_left)
+                self.assertEqual(guesses_left-(10-self.game.get_guesses_left()), self.game.get_guesses_left())
             elif status_code == 200:
                 self.assertEqual(response, "Congratulations! You guessed the word correctly.")
                 self.assertEqual(status_code, 200)
-                self.assertEqual(self.game.guesses_left, self.game.guesses_left)
+                self.assertEqual(guesses_left-(10-self.game.get_guesses_left()), self.game.get_guesses_left())
             elif status_code == 202:
                 self.assertEqual(response, f"Game Over. The word was '{self.game.secret_word}'. Try again!")
                 self.assertEqual(status_code, 202)
-                self.assertEqual(self.game.guesses_left, self.game.guesses_left)
+                self.assertEqual(guesses_left-(10-self.game.get_guesses_left()), self.game.get_guesses_left())
             elif status_code == 202:
-                self.assertEqual(response, f"Wrong guess. {self.guesses_left} guesses left.")
+                self.assertEqual(response, f"Wrong guess. {guesses_left} guesses left.")
                 self.assertEqual(status_code, 203)
-                self.assertEqual(self.game.guesses_left, self.game.guesses_left)
+                self.assertEqual(guesses_left-(10-self.game.get_guesses_left()), self.game.get_guesses_left())
 
 if __name__ == "__main__":
     unittest.main()

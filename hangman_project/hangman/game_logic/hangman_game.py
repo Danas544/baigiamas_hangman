@@ -31,6 +31,9 @@ class HangmanGame:
         self.guesses_left: int = 10
         self.win: Union[bool, None] = None
 
+    def get_guesses_left(self):
+        return self.guesses_left
+
     def get_game_data(self) -> Dict[str, Any]:
         return {
             "theme_id": self.theme_id,
