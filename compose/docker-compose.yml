@@ -1,10 +1,10 @@
 version: "3.10"
 services:
   hangman-app:
-    container_name: hangman-app
+    container_name: app-hangman-app
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ../
+      dockerfile: docker/Dockerfile
     depends_on:
       - database
     environment:
@@ -12,17 +12,20 @@ services:
       - PROJECT_NAME=hangman_app
       - SQLALCHEMY_MAX_POOL_OVERFLOW=20
     ports:
-      - "5001:5001"
+      - "5002:5002"
     volumes:
-      - ./hangman:/hangman
+      - ../hangman_project:/usr/src/app/
+      - C:/Code/baigiamas_hangman/logs:/usr/src/app/logs
+      - C:/Code/baigiamas_hangman/hangman_project/logging_config.ini:/usr/src/app/logging_config.ini
+
     networks:
       - development
+ 
 
   database:
-    container_name: postgresql_db_hangman
+    container_name: postgresql_hangman
     image: postgres:15
-    env_file:
-      - db.env
+
     volumes:
       - postgre:/var/lib/postgresql/data
     networks:
@@ -32,6 +35,7 @@ services:
 
 networks:
   development:
+
 
 volumes:
   postgre:
