@@ -20,7 +20,28 @@ services:
 
     networks:
       - development
- 
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    depends_on:
+      - hangman-app
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/proxy_params:/etc/nginx/proxy_params:ro
+    networks:
+      - development
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    environment:
+      - CERTBOT_EMAIL=Danielius.au@gmail.com
+    command: certonly --webroot --webroot-path=/var/www/certbot -d eviteja.lt -d www.eviteja.lt
+
+
 
   database:
     container_name: postgresql_hangman
