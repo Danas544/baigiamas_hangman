@@ -2,36 +2,85 @@
 
 {% block content %}
 <div class="container">
-    <h2>All User Statistics</h2>
+    <h2 class="text-center">All User Statistics</h2>
     
-    <table class="table table-bordered table-striped table-condensed">
-        <thead>
-            <tr>
-                <th>Rank</th>
-                <th>Photo</th>
-                <th>User</th>
-                <th>Total Score</th>
-                <th>Total Wins</th>
-                <th>Total Losses</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for rank, user_id in sorted_users %}
-            <tr>
-                <td>{{ rank }}</td>
-                <td>
-                    <img class="rounded-circle account-img" src="{{ user_photos.get(user_id, None) }}" width="40" height="60">
-                    {% if rank == 1 %}
-                        <img src="{{ url_for('static', filename='crown.png') }}" class="crown-icon">
-                    {% endif %}
-                </td>
-                <td>{{ user_names.get(user_id, None) }}</td>
-                <td>{{ user_total_scores.get(user_id, 0) }}</td>
-                <td>{{ user_total_wins.get(user_id, 0) }}</td>
-                <td>{{ user_total_losses.get(user_id, 0) }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>User</th>
+                    <th>Total Score</th>
+                    <th>Total Wins</th>
+                    <th>Total Losses</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rank, user_id in sorted_users %}
+                <tr>
+                    <td>{{ rank }}</td>
+                    <td>
+                        <div class="user-details">
+                            <img class="rounded-circle account-img" src="{{ user_photos.get(user_id, None) }}" alt="User Photo">
+                            <div class="user-info">
+                                <div class="user-name">{{ user_names.get(user_id, None) }}</div>
+                                {% if rank == 1 %}
+                                    <img src="{{ url_for('static', filename='crown.png') }}" class="crown-icon" alt="Crown Icon">
+                                {% endif %}
+                            </div>
+                        </div>
+                    </td>
+                    <td>{{ user_total_scores.get(user_id, 0) }}</td>
+                    <td>{{ user_total_wins.get(user_id, 0) }}</td>
+                    <td>{{ user_total_losses.get(user_id, 0) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
+
+<style>
+
+    @media (max-width: 767px) {
+        .text-center {
+            text-align: center;
+        }
+        
+        .table-responsive {
+            overflow-x: auto;
+        }
+        
+        .table {
+            font-size: 12px;
+        }
+        
+        .user-details {
+            display: flex;
+            align-items: center;
+        }
+        
+        .account-img {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+        }
+        
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .user-name {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .crown-icon {
+            width: 20px;
+            height: 20px;
+            margin-top: 5px;
+        }
+    }
+</style>
 {% endblock %}

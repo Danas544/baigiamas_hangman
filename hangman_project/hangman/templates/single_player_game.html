@@ -1,40 +1,38 @@
 {% extends "base.html" %}
 
 {% block content %}
-
 <div class="container">
-    <h1 class="text-center">Hangman Game</h1>
+    <h1 class="text-center mb-4">Hangman Game</h1>
 
     <div class="row">
-        <div class="col-md-4 text-center">
-            <p>Theme: {{ hangman_game.theme_name }}</p>
-            <p>Word: {{ " ".join(hangman_game.guess_word) }}</p>
-            <p>Guessed Letters: {{ hangman_game.get_guessed_letters() }}</p>
-            <p>Guesses Left: {{ hangman_game.get_guesses_left() }}</p>
+        <div class="col-md-4 col-sm-12 text-center mb-md-0 mb-4">
+            <p><strong>Theme:</strong> {{ hangman_game.theme_name }}</p>
+            <p><strong>Word:</strong> {{ " ".join(hangman_game.guess_word) }}</p>
+            <p><strong>Guessed Letters:</strong> {{ hangman_game.get_guessed_letters() }}</p>
+            <p><strong>Guesses Left:</strong> {{ hangman_game.get_guesses_left() }}</p>
 
             <form method="post" action="{{ url_for('single_player_game', theme_id=theme_id) }}">
-                <div class="form-group">
+                <div class="form-group mb-2">
                     <input type="text" name="letter" maxlength="1" pattern="[a-zA-Z]"
-                        title="Please enter a single letter (a-z or A-Z)" required autocomplete="off" 
-                        >
+                        title="Please enter a single letter (a-z or A-Z)" required autocomplete="off" class="form-control">
                 </div>
                 {% if end_game == False %}
-                <input type="submit" value="Guess" class="btn btn-primary">
+                <input type="submit" value="Guess" class="btn btn-primary btn-block">
                 {% else %}
-                <a href="{{ url_for('theme_selection') }}" class="btn btn-primary">Start Again?</a>
+                <a href="{{ url_for('theme_selection') }}" class="btn btn-primary btn-block">Start Again?</a>
                 {% endif %}
             </form>
-            <p class="text-center">{{ game_output[0] }}</p>
+            <p class="text-center mt-3">{{ game_output[0] }}</p>
         </div>
 
-        <div class="col-md-6 text-center">
+        <div class="col-md-6 col-sm-12 text-center">
             <div class="hangman-display">
-                <img src="{{ url_for('static', filename="game_photo/" + hangman_game.get_hangman_drawing()) }}" alt="Hangman Drawing">
+                <img src="{{ url_for('static', filename="game_photo/" + hangman_game.get_hangman_drawing()) }}" alt="Hangman Drawing" class="hangman-image img-fluid">
             </div>
             {% if hangman_game.get_guesses_left() == 0 and user_photo != 'default.jpg' %}
 
-            <div class="user-profile-picture">
-                <img src="{{ url_for('static', filename='profile_photos/' + user_photo) }}" class="rounded-circle move-profile-picture">
+            <div class="user-profile-picture mt-3">
+                <img src="{{ url_for('static', filename='profile_photos/' + user_photo) }}" class="rounded-circle move-profile-picture" width="60" height="60">
             </div>
 
             {% endif %}
@@ -43,7 +41,7 @@
     </div>
     <div class="text-center mt-4">
         <button id="muteButton" class="btn btn-secondary">Mute Sound</button>
-        <input id="volumeSlider" type="range" min="0" max="1" step="0.1" value="0.1" class="form-range">
+        <input id="volumeSlider" type="range" min="0" max="1" step="0.1" value="0.1" class="form-range mt-2">
     </div>
 </div>
 
