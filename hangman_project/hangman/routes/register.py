@@ -6,7 +6,7 @@ from hangman.forms.register_form import RegisterForm
 from hangman.hangman_db.models.user import User
 from hangman import logger
 from typing import Union
-
+from hangman.email_send.send_email import send_email_confirmation
 
 @app.route("/register", methods=["GET", "POST"])
 def register() -> Union[str, redirect]:
@@ -24,7 +24,8 @@ def register() -> Union[str, redirect]:
         )
         db.session.add(user)
         db.session.commit()
-        logger.info("You have successfully registered! You can login")
-        flash("You have successfully registered! You can login", "success")
+        send_email_confirmation(user)
+        logger.info("You have successfully registered! Please confirm your email")
+        flash("You have successfully registered! Please confirm your email", "success")
         return redirect(url_for("index"))
     return render_template("register.html", title="Register", form=form)

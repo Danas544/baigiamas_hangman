@@ -1,9 +1,9 @@
 # pylint: disable-all
 from flask import render_template, url_for
-from flask_login import current_user, login_required
+from flask_login import login_required
 from hangman import app
 from hangman.hangman_db.crud import get_all_stats
-from typing import Dict, List, Tuple, Union
+from typing import Dict
 
 @app.route("/all_stats", methods=["GET"])
 @login_required

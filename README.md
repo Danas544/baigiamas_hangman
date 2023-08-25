@@ -21,9 +21,8 @@ won/lost, guesses made.
 
 ___
 
-readmy reikia dar sutvarkyti ir testu
+readmy reikia dar sutvarkyti
  
 docker-compose build
 docker-compose up
 
-jeigu nespesiu email tai reikia pratrinti ka pradejau tai init file ir modules user

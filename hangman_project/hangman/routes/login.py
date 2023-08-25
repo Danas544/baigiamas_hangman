@@ -17,6 +17,11 @@ def login() -> Union[str, redirect]:
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
+            if user.email_confirm is False:
+                logger.info(f"Your mail has not yet been verified, please confirm first {user.email}")
+                flash(f"Your mail has not yet been verified, please confirm first {user.email}", "warning")
+                return redirect(url_for("index"))
+
             login_user(user)
             logger.info(f"Login success: {user.username}")
             flash(f"Login success: {user.username}", "success")

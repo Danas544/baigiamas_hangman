@@ -8,6 +8,7 @@ from flask_mail import Mail
 import logging
 import logging.config
 from hangman.hangman_db.create_db import get_db_uri
+from dotenv import load_dotenv
 
 logging.config.fileConfig("logging_config.ini", disable_existing_loggers=False)
 
@@ -16,11 +17,14 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = "4654f5dfadsrfasdr54e6rae"
 app.config["SQLALCHEMY_DATABASE_URI"] = get_db_uri()
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-# app.config["MAIL_SERVER"] = "smtp.gmail.com"
-# app.config["MAIL_PORT"] = 587
-# app.config["MAIL_USE_TLS"] = True
-# app.config["MAIL_USERNAME"] = "moterisarbavyras@gmail.com"
-# app.config["MAIL_PASSWORD"] = "jlgltculfzfjzcrx"
+MAX_IMAGE_SIZE = 20 * 1024 * 1024
+app.config['MAX_CONTENT_LENGTH'] = MAX_IMAGE_SIZE
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 587
+app.config["MAIL_USE_TLS"] = True
+load_dotenv("db.env")
+app.config["MAIL_USERNAME"] = os.environ.get("MAIL_USERNAME")
+app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
 
 admin = Admin(app)
 bcrypt = Bcrypt(app)
@@ -59,6 +63,8 @@ import hangman.routes.user_stats
 import hangman.routes.all_user_stats
 import hangman.routes.errors
 import hangman.routes.favicon
+import hangman.routes.forgot_password
+import hangman.routes.email_confirm
 
 
 if __name__ == "__main__":
