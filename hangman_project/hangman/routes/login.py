@@ -27,6 +27,6 @@ def login() -> Union[str, redirect]:
             flash(f"Login success: {user.username}", "success")
             return redirect(url_for("index"))
         else:
-            logger.warning("Login failed. Check email email and password")
-            flash("Login failed. Check email email and password", "danger")
+            logger.warning("Login failed. Check email and password")
+            flash("Login failed. Check email and password", "danger")
     return render_template("login.html", title="Log In", form=form)
