@@ -15,8 +15,8 @@ services:
       - "5002:5002"
     volumes:
       - ../hangman_project:/usr/src/app/
-      - C:/Code/baigiamas_hangman/logs:/usr/src/app/logs
-      - C:/Code/baigiamas_hangman/hangman_project/logging_config.ini:/usr/src/app/logging_config.ini
+      - ../logs:/usr/src/app/logs
+      - ../hangman_project/logging_config.ini:/usr/src/app/logging_config.ini
 
     networks:
       - development
