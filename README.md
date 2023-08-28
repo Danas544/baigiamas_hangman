@@ -1,28 +1,38 @@
-# hangman_baigiamas
-Task(Choose one):
-1. Create a Hangman Game (GUI/terminal version).
-https://www.youtube.com/watch?v=leW9ZotUVYo
-- Maximum guess attempts: 10.
-- Ability to guess a word or a letter. If a guess is incorrect, user loses 1 life.
-- If user has 0 guesses (lifes) left, game is lost.
+# Flask Hangman Game Website
 
-Requirements:
-● Create a new GITHUB project, virtual env, README, .gitignore, etc.
-● Use OOP structures (classes, inheritance, etc) t o construct game backend logic.
-● Create user registration (name,surname, email).
-● Use Sql and/or NoSql databases to store all necessary data.
-● Use type annotations.
-● Use a logging library to log out information.
-● Unit tests to cover most important functionality.
-● After the game session, show a table with user information, games played , games
-won/lost, guesses made.
-● Dockerize all parts of application as microservices.
+Welcome to the Flask Hangman Game website! This project allows you to play the classic Hangman game online. The website includes user registration, login, password recovery, profile management, and a variety of word topics to challenge your vocabulary.
+
+## Table of Contents
+
+- [Features](#features)
+- [Getting Started](#getting-started)
+
+## Features
+
+- **User Registration and Confirmation**: Users can register for an account and receive a confirmation email to activate their account.
+- **Login and Authentication**: Secure login system with authentication and session management.
+- **Password Recovery**: Forgot your password? No problem. Users can reset their password by receiving a recovery link via email.
+- **Word Topics**: Choose from various word topics to play Hangman with words related to that topic.
+- **Profile Management**: Users can change their name, email address, and password in their profile settings.
+- **Profile Picture**: Customize your profile with a profile picture.
+- **Status Updates**: Users can view their own status or the statuses of all players.
+
+## Getting Started
+
+Follow these steps to set up and run the Flask Hangman Game website on your local machine:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Danas544/baigiamas_hangman.git
+   cd baigiamas_hangman/compose
+   docker-compose build
+   docker-compose up
+   docker-compose exec database psql -U user -d postgres
+   CREATE DATABASE hangman;
+   \q
+   docker-compose down
+   docker-compose up
 
 
-___
 
-readmy reikia dar sutvarkyti
- 
-docker-compose build
-docker-compose up
 

@@ -40,9 +40,8 @@ services:
     environment:
       - CERTBOT_EMAIL=Danielius.au@gmail.com
     command: certonly --webroot --webroot-path=/var/www/certbot -d eviteja.lt -d www.eviteja.lt
-
-
-
+    depends_on:
+      - nginx
   database:
     container_name: postgresql_hangman
     image: postgres:15
