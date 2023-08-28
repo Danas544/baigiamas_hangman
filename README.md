@@ -6,6 +6,7 @@ Welcome to the Flask Hangman Game website! This project allows you to play the c
 
 - [Features](#features)
 - [Getting Started](#getting-started)
+- [Configuring Nginx](#Configuring Nginx for Your Domain)
 
 ## Features
 
@@ -25,13 +26,29 @@ Follow these steps to set up and run the Flask Hangman Game website on your loca
    ```bash
    git clone https://github.com/Danas544/baigiamas_hangman.git
    cd baigiamas_hangman/compose
+2. Build and start the Docker containers:
    docker-compose build
-   docker-compose up
+   docker-compose up -d
+3. Create the 'hangman' database:
    docker-compose exec database psql -U user -d postgres
    CREATE DATABASE hangman;
    \q
+4. Stop and restart the containers to apply the database changes:
    docker-compose down
    docker-compose up
+
+## Configuring Nginx for Your Domain
+
+To configure Nginx for your own domain, follow these steps:
+
+1. Open the `my_website.conf` file located at `/compose/nginx/conf.d/my_website.conf`.
+
+2. Locate the `server_name` directive and replace it with your own domain name. For example, if your domain is `example.com`, update the line as follows:
+
+   ```nginx
+   server_name example.com www.example.com;
+
+3. docker-compose restart nginx
 
 
 

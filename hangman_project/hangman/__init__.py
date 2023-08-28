@@ -8,7 +8,7 @@ from flask_mail import Mail
 import logging
 import logging.config
 from hangman.hangman_db.create_db import get_db_uri
-from dotenv import load_dotenv
+
 
 logging.config.fileConfig("logging_config.ini", disable_existing_loggers=False)
 
@@ -22,9 +22,7 @@ app.config['MAX_CONTENT_LENGTH'] = MAX_IMAGE_SIZE
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 587
 app.config["MAIL_USE_TLS"] = True
-load_dotenv("db.env")
-app.config["MAIL_USERNAME"] = os.environ.get("MAIL_USERNAME")
-app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
+
 
 admin = Admin(app)
 bcrypt = Bcrypt(app)
