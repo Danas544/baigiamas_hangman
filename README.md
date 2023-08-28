@@ -35,8 +35,8 @@ Follow these steps to set up and run the Flask Hangman Game website on your loca
    docker-compose exec database psql -U user -d postgres
    CREATE DATABASE hangman;
    \q
-   ```bash
 4. Stop and restart the containers to apply the database changes:
+   ```bash
    docker-compose down
    docker-compose up
 
