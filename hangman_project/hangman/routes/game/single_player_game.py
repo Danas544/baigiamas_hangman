@@ -11,8 +11,7 @@ from typing import Union
 def single_player_game(theme_id: int) -> Union[str, redirect]:
     end_game = False
     if f"hangman_game_{current_user.id}" not in session or session[
-        f"hangman_game_{current_user.id}"
-    ]["theme_id"] != theme_id:
+        f"hangman_game_{current_user.id}"]["theme_id"] != theme_id:
         hangman_game = HangmanGame()
         try:
             hangman_game.select_theme(theme_id)

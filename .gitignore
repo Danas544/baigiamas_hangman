@@ -2,3 +2,7 @@
 .vscode
 __pycache__
 logs
+compose/backup.sql
+compose/certbot/conf
+compose/certbot/www
+*.json

@@ -175,10 +175,10 @@ h2 {
   width: 80px;
   height: auto;
   position: absolute;
-  top: 165px;
-  left: 85%;
+  top: 125px;
+  left: 55%;
   transform: translateX(-50%);
-  transform: rotate(65deg);
+  transform: rotate(-25deg);
 }
 
 @media (max-width: 767px) {
