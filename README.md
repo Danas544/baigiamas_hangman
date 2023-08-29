@@ -30,15 +30,6 @@ Follow these steps to set up and run the Flask Hangman Game website on your loca
    ```bash
    docker-compose build
    docker-compose up -d
-3. Create the 'hangman' database:
-   ```bash
-   docker-compose exec database psql -U user -d postgres
-   CREATE DATABASE hangman;
-   \q
-4. Stop and restart the containers to apply the database changes:
-   ```bash
-   docker-compose down
-   docker-compose up
 
 ## Configuring Nginx for Your Domain
 
